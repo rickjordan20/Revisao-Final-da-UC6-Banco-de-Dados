@@ -17,7 +17,21 @@ details{background:#091929;border:1px solid var(--line);border-radius:14px;paddi
 .table{width:100%;border-collapse:collapse;font-size:.93rem}.table th,.table td{border:1px solid var(--line);padding:9px;text-align:left}.table th{background:#122740}.ticket{border:1px dashed #416080;border-radius:16px;padding:18px;margin:14px 0}.ticket h3{margin-top:0}.status{font-size:.85rem;color:var(--muted)}
 .report{display:none;background:#0d1b2d;color:#eef6ff;padding:28px;border:1px solid #203957;border-radius:16px}.report h1,.report h2,.report h3{color:#eef6ff}.report p,.report li{color:#dbe7f5}.report .muted{color:#a9bad0}.report pre{white-space:pre-wrap;background:#04101c;color:#d7edff;padding:12px;border:1px solid #294b69;border-radius:10px}.reportSection{border-top:1px solid #294b69;padding-top:14px;margin-top:18px}.report details{background:#091929;border-color:#294b69;color:#eef6ff}.report summary{color:#baf4df}.noPrint{}
 footer{padding:40px 0 70px;color:var(--muted);text-align:center}
-@media print{body{background:#07111f!important;color:#eef6ff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.noPrint,.progressWrap,.hero,.content{display:none!important}.report{display:block!important;background:#0d1b2d!important;color:#eef6ff!important;border:0}.container{width:100%}.report{padding:18px}.report h1,.report h2,.report h3,.report p,.report li{color:#eef6ff!important}.report pre{background:#04101c!important;color:#d7edff!important;border-color:#294b69!important}.report details{background:#091929!important;color:#eef6ff!important}.reportSection{border-color:#294b69!important;break-inside:avoid}}
+@media print{
+  @page{size:A4;margin:12mm}
+  html,body{background:#07111f!important;color:#eef6ff!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .noPrint,.progressWrap,.hero,.content{display:none!important}
+  .report{display:block!important;background:#0d1b2d!important;color:#eef6ff!important;border:0!important;border-radius:0!important;width:100%!important;max-width:none!important;padding:16px!important;margin:0!important}
+  .container{width:100%!important;max-width:none!important}
+  .report h1,.report h2,.report h3,.report p,.report li{color:#eef6ff!important}
+  .report pre{background:#04101c!important;color:#d7edff!important;border-color:#294b69!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important}
+  .report details{display:block!important;background:#091929!important;color:#eef6ff!important}
+  .report details>summary{display:block!important}
+  .report details>div{display:block!important}
+  .reportSection{border-color:#294b69!important;break-inside:auto!important;page-break-inside:auto!important;margin:18px 0!important;padding:14px 0!important}
+  .reviewItem{break-inside:avoid-page!important;page-break-inside:avoid!important}
+  .report h2{break-after:avoid-page!important;page-break-after:avoid!important}
+}
 
 /* Organização visual — separação entre blocos pedagógicos */
 .card{padding:30px;margin:30px 0}
@@ -266,7 +280,7 @@ function compareText(answer,groups){
   return '<strong>Comparação orientativa:</strong> '+proximityLabel(s)+' ('+s.hit+' de '+s.total+' ideias-chave identificadas). <span class="muted">A análise é apenas um apoio por palavras/ideias-chave; não substitui sua revisão nem a avaliação do instrutor.</span>';
 }
 function reviewBox(question,answer,expected,comparison){
-  return '<div style="border:1px solid #294b69;background:#091827;border-radius:12px;padding:16px;margin:16px 0;break-inside:avoid"><p><strong>📝 Pergunta / demanda</strong><br>'+question+'</p><p><strong>✍️ Sua resposta</strong></p><pre>'+esc(answer)+'</pre><div style="background:#0a211f;border:1px solid #2e6b59;border-left:4px solid #46d7a1;border-radius:10px;padding:12px 14px;margin:12px 0"><p style="margin-top:0"><strong>✅ Resposta correta / referência</strong></p><div>'+expected+'</div></div>'+(comparison?'<p>'+comparison+'</p>':'')+'<p style="font-size:.9rem"><strong>🔎 Faça sua revisão:</strong> compare sua resposta com a referência logo acima. Verifique o que você acertou, o que faltou e o que corrigiria antes da avaliação.</p></div>'
+  return '<div class="reviewItem" style="border:1px solid #294b69;background:#091827;border-radius:12px;padding:16px;margin:16px 0"><p><strong>📝 Pergunta / demanda</strong><br>'+question+'</p><p><strong>✍️ Sua resposta</strong></p><pre>'+esc(answer)+'</pre><div style="background:#0a211f;border:1px solid #2e6b59;border-left:4px solid #46d7a1;border-radius:10px;padding:12px 14px;margin:12px 0"><p style="margin-top:0"><strong>✅ Resposta correta / referência</strong></p><div>'+expected+'</div></div>'+(comparison?'<p>'+comparison+'</p>':'')+'<p style="font-size:.9rem"><strong>🔎 Faça sua revisão:</strong> compare sua resposta com a referência logo acima. Verifique o que você acertou, o que faltou e o que corrigiria antes da avaliação.</p></div>'
 }
 function generateReport(){saveAll();const date=new Date().toLocaleDateString('pt-BR');const r=document.getElementById('report');
 const tipoAns=(radio('tipo')||'—')+'\n'+val('tipoJust');
@@ -305,7 +319,7 @@ ${reviewBox('Ticket #005 — Antes de excluir o chamado ID 6, explique a verific
 
 <div class="reportSection"><h2>Autoavaliação</h2><p><strong>Indicador 1:</strong> ${esc(val('auto1'))}<br><strong>Indicador 2:</strong> ${esc(val('auto2'))}<br><strong>Indicador 3:</strong> ${esc(val('auto3'))}<br><strong>Indicador 4:</strong> ${esc(val('auto4'))}</p><p><strong>O que mais preciso revisar:</strong><br>${esc(val('precisa'))}</p><p><strong>O que considero que domino melhor:</strong><br>${esc(val('domina'))}</p></div>
 <div class="reportSection"><h2>Plano final de revisão</h2><p>Com base na sua autoavaliação e nas soluções que você consultou, priorize:</p><ul>${reviewList().map(x=>`<li>${esc(x)}</li>`).join('')}</ul><p><strong>Orientação:</strong> volte às respostas marcadas como “Parcialmente próxima” ou “Revise com atenção”, compare com a referência e tente reescrevê-las sem consultar o gabarito.</p></div>
-<div class="noPrint"><button onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button><button class="secondary" onclick="document.getElementById('report').style.display='none';document.querySelector('.content').style.display='block'">← Voltar à revisão</button></div>`;
+<div class="noPrint"><p class="muted"><strong>💡 Para salvar o relatório completo:</strong> clique em Imprimir / Salvar em PDF. Na janela de impressão, mantenha a opção de <strong>gráficos de plano de fundo</strong> ativada para preservar o tema escuro.</p><button onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button><button class="secondary" onclick="document.getElementById('report').style.display='none';document.querySelector('.content').style.display='block'">← Voltar à revisão</button></div>`;
 document.querySelector('.content').style.display='none';r.style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
 function clearAll(){if(confirm('Deseja apagar todas as respostas salvas neste protótipo?')){localStorage.removeItem('uc6_helpnow');location.reload()}}
 loadAll();
