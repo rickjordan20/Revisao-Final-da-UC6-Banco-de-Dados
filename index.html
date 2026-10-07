@@ -58,7 +58,69 @@ details[data-track^="sol"] summary{color:#baf4df}
 <h2>📚 O que vai cair na avaliação?</h2><p class="muted">O foco é saber <strong>interpretar e aplicar</strong>, não apenas decorar comandos.</p>
 <div class="grid"><div class="mini"><strong>1. Tipos de banco</strong>Relacional × não relacional, aplicabilidade e justificativa.</div><div class="mini"><strong>2. SGBD</strong>Conceito, finalidade, escolha e justificativa conforme a aplicação.</div><div class="mini"><strong>3. Modelagem</strong>Requisitos, entidades, atributos, DER, cardinalidade, PK e FK.</div><div class="mini"><strong>4. Normalização</strong>1FN, 2FN e 3FN com foco em organização, redundância e consistência.</div><div class="mini"><strong>5. Conceitual → lógico → físico</strong>Entidade→tabela, atributo→coluna, identificador→PK, 1:N→FK no lado N.</div><div class="mini"><strong>6. DDL</strong>CREATE, ALTER, DROP, tipos e constraints.</div><div class="mini"><strong>7. CRUD</strong>INSERT, SELECT, UPDATE e DELETE, especialmente uso seguro do WHERE.</div><div class="mini"><strong>8. Consultas</strong>WHERE, AND, OR, NOT, LIKE, ORDER BY, ASC e DESC.</div></div>
 <details><summary>⭐ Conteúdos complementares também estudados</summary><p>JOINs, subqueries, funções agregadas, GROUP BY/HAVING, DCL (GRANT/REVOKE), TCL (COMMIT/ROLLBACK/SAVEPOINT/ACID) e LGPD. Eles aparecem como revisão complementar, sem virar novos indicadores.</p></details>
-<div class="context" style="margin-top:16px"><strong>🧠 Blocos de comandos SQL — revisão rápida</strong><p class="muted" style="margin:.35rem 0 .8rem">Use este quadro para lembrar a qual família pertencem os principais comandos.</p><div class="grid"><div class="mini"><strong>🏗️ DDL — Estrutura</strong><span class="tag">CREATE — cria</span><span class="tag">ALTER — altera</span><span class="tag">DROP — remove</span></div><div class="mini"><strong>📝 DML — Dados</strong><span class="tag">INSERT — insere</span><span class="tag">UPDATE — atualiza</span><span class="tag">DELETE — exclui</span></div><div class="mini"><strong>🔎 DQL — Consulta</strong><span class="tag">SELECT — consulta</span></div><div class="mini"><strong>🔐 DCL — Acesso</strong><span class="tag">GRANT — concede</span><span class="tag">REVOKE — remove</span></div><div class="mini"><strong>🔄 TCL — Transações</strong><span class="tag">COMMIT — confirma</span><span class="tag">ROLLBACK — desfaz</span><span class="tag">SAVEPOINT — cria ponto de retorno</span></div></div><details><summary>📚 Quero revisar o que cada bloco faz</summary><p><strong>DDL</strong> cria, altera ou remove a <strong>estrutura</strong> do banco.<br><strong>DML</strong> insere, atualiza ou exclui <strong>dados</strong>.<br><strong>DQL</strong> é usado para <strong>consultar</strong> dados.<br><strong>DCL</strong> controla <strong>permissões de acesso</strong>.<br><strong>TCL</strong> controla <strong>transações</strong>, permitindo confirmar, desfazer ou criar pontos de retorno.</p><p class="muted"><strong>Atalho mental:</strong> Estrutura → DDL • Dados → DML • Consulta → DQL • Permissão → DCL • Transação → TCL.</p></details></div>
+<div class="context" style="margin-top:16px"><strong>🧠 Blocos de comandos SQL — revisão rápida</strong><p class="muted" style="margin:.35rem 0 .8rem">Use este quadro para lembrar o significado de cada sigla e a qual família pertencem os principais comandos.</p><div class="grid">
+<div class="mini"><strong>🏗️ DDL — Data Definition Language</strong><span class="muted">Linguagem de Definição de Dados</span><br><span class="tag">CREATE — cria</span><span class="tag">ALTER — altera</span><span class="tag">DROP — remove</span></div>
+<div class="mini"><strong>📝 DML — Data Manipulation Language</strong><span class="muted">Linguagem de Manipulação de Dados</span><br><span class="tag">INSERT — insere</span><span class="tag">UPDATE — atualiza</span><span class="tag">DELETE — exclui</span></div>
+<div class="mini"><strong>🔎 DQL — Data Query Language</strong><span class="muted">Linguagem de Consulta de Dados</span><br><span class="tag">SELECT — consulta</span></div>
+<div class="mini"><strong>🔐 DCL — Data Control Language</strong><span class="muted">Linguagem de Controle de Dados</span><br><span class="tag">GRANT — concede</span><span class="tag">REVOKE — remove</span></div>
+<div class="mini"><strong>🔄 TCL — Transaction Control Language</strong><span class="muted">Linguagem de Controle de Transações</span><br><span class="tag">COMMIT — confirma</span><span class="tag">ROLLBACK — desfaz</span><span class="tag">SAVEPOINT — cria ponto de retorno</span></div>
+</div>
+<details><summary>📚 Quero revisar o que cada bloco faz</summary><p><strong>DDL</strong> cria, altera ou remove a <strong>estrutura</strong> do banco.<br><strong>DML</strong> insere, atualiza ou exclui <strong>dados</strong>.<br><strong>DQL</strong> é usado para <strong>consultar</strong> dados.<br><strong>DCL</strong> controla <strong>permissões de acesso</strong>.<br><strong>TCL</strong> controla <strong>transações</strong>, permitindo confirmar, desfazer ou criar pontos de retorno.</p><p class="muted"><strong>Atalho mental:</strong> Estrutura → DDL • Dados → DML • Consulta → DQL • Permissão → DCL • Transação → TCL.</p></details>
+<details><summary>💻 Ver exemplos dos comandos SQL por bloco</summary>
+<h4>🏗️ DDL — estrutura do banco</h4><div class="code">CREATE DATABASE helpnow;
+CREATE TABLE cliente (
+  id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL
+);
+
+ALTER TABLE cliente
+ADD COLUMN telefone VARCHAR(20);
+
+DROP TABLE cliente;</div>
+<h4>📝 DML — manipulação dos dados</h4><div class="code">INSERT INTO cliente (nome, telefone)
+VALUES ('Livraria Saber', '99999-4444');
+
+UPDATE cliente
+SET telefone = '98888-4444'
+WHERE id_cliente = 1;
+
+DELETE FROM cliente
+WHERE id_cliente = 1;</div>
+<h4>🔎 DQL — consulta dos dados</h4><div class="code">SELECT * FROM chamado;
+
+SELECT * FROM chamado
+WHERE status = 'Aberto'
+ORDER BY data_abertura DESC;
+
+SELECT ch.descricao, cl.nome AS cliente
+FROM chamado ch
+INNER JOIN cliente cl
+ON ch.id_cliente = cl.id_cliente;
+
+SELECT id_tecnico, COUNT(*) AS total
+FROM chamado
+GROUP BY id_tecnico
+HAVING COUNT(*) > 2;</div>
+<h4>🔐 DCL — controle de acesso</h4><div class="code">GRANT SELECT ON helpnow.* TO 'usuario'@'localhost';
+
+REVOKE SELECT ON helpnow.* FROM 'usuario'@'localhost';</div>
+<h4>🔄 TCL — controle de transações</h4><div class="code">START TRANSACTION;
+
+SAVEPOINT antes_da_alteracao;
+
+UPDATE chamado
+SET status = 'Finalizado'
+WHERE id_chamado = 1;
+
+COMMIT;
+
+-- Se precisar desfazer:
+ROLLBACK;
+
+-- Ou voltar a um ponto específico:
+ROLLBACK TO antes_da_alteracao;</div>
+<p class="muted">💡 Use estes exemplos como consulta rápida. Nas missões, tente montar e testar seu próprio comando antes de conferir um modelo.</p>
+</details></div>
 </section>
 <section class="card">
 <h2>🏢 O cenário: HelpNow</h2><p>A HelpNow é uma pequena empresa de suporte de informática. Quando um cliente tem um problema, um técnico recebe o chamado. Hoje tudo é controlado em uma planilha:</p>
